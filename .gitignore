@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# Obsidian — keep shared config, ignore per-machine/volatile state
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.obsidian/plugins/**/data.json
+
+# Obsidian trash
+.trash/
