@@ -1,0 +1,28 @@
+name: Notify Slack on new article
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Articles/**.md"
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # need history to diff the pushed range
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Notify new articles
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.event.after }}
+          SITE_BASE: https://lea-loft.sigongan.com
+        run: node .github/scripts/notify-new-articles.mjs
